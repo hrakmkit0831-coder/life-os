@@ -226,3 +226,20 @@ test('分析：データがなければ架空の値を出さず記録を促す',
   await expect(page.getByText('睡眠の記録がまだありません')).toBeVisible()
   await expect(page.locator('svg[role="img"]')).toHaveCount(0)
 })
+
+test('Apple Watch の睡眠をショートカット経由（クリップボード）で取り込む', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', { value: { readText: async () => 'LIFEOS睡眠\n2026-10-14 23:42\n2026-10-15 07:05' } })
+  })
+  await open(page, '/life')
+  await page.getByRole('button', { name: 'ヘルスケアから取り込む' }).click()
+  await expect(page.getByText('23:42 → 07:05（7時間23分）')).toBeVisible()
+  await page.getByRole('button', { name: '記録する' }).click()
+  await expect(page.getByText('ヘルスケアの睡眠を記録しました')).toBeVisible()
+  await expect(page.getByLabel('就寝時刻')).toHaveValue('23:42')
+  await expect(page.getByLabel('起床時刻')).toHaveValue('07:05')
+  await page.reload()
+  await expect(page.getByText('23:42 → 07:05')).toBeVisible()
+  await page.getByRole('button', { name: '設定方法' }).click()
+  await expect(page.getByRole('dialog', { name: 'ショートカットの作り方' })).toContainText('ヘルスケアサンプルを検索')
+})

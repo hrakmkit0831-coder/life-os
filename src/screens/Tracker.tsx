@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { SleepImport } from '../components/sleepImport'
 import { Field, Icon, Seg, TopBar } from '../components/ui'
 import { addDays, formatJa, formatMin, formatShort, lastNDays, sleepDuration, startOfMonth, startOfWeek } from '../lib/date'
 import { expenseByCategory, expenseTotal } from '../lib/analytics'
@@ -10,7 +11,7 @@ type Area = 'rhythm' | 'health' | 'time' | 'money'
 const yen = (n: number) => `¥${n.toLocaleString('ja-JP')}`
 
 export function Tracker() {
-  const { today } = useStore()
+  const { today, data } = useStore()
   const [area, setArea] = useState<Area>('rhythm')
   const [date, setDate] = useState<ISODate>(today)
   return (
@@ -35,7 +36,8 @@ export function Tracker() {
           <Icon name="right" />
         </button>
       </div>
-      {area === 'rhythm' && <Rhythm key={date} date={date} />}
+      {area === 'rhythm' && <SleepImport onImported={setDate} />}
+      {area === 'rhythm' && <Rhythm key={`${date}|${data.sleepRecords.find((r) => r.date === date)?.updatedAt ?? 0}`} date={date} />}
       {area === 'health' && <Health key={date} date={date} />}
       {area === 'time' && <Time key={date} date={date} />}
       {area === 'money' && <Money key={date} date={date} />}
