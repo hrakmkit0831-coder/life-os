@@ -5,6 +5,7 @@
 
 - データはすべて端末内（IndexedDB）。外部送信・解析サービス・外部 AI なし
 - オフライン動作（Service Worker）、ホーム画面に追加して全画面で使用可
+- 公開URL: https://hrakmkit0831-coder.github.io/life-os/（GitHub Pages・gh-pages ブランチ）
 
 ## 画面
 
@@ -86,3 +87,13 @@ npm run e2e        # E2E（Playwright: iPhone 13 / iPhone SE 相当の WebKit、
 - アプリを閉じている間のタイマー終了通知は出せない（開いているときは画面表示と音）
 - 端末間の自動同期なし（JSON で移行）
 - http（LAN）配信ではオフライン不可。HTTPS 配信が必要
+
+## 更新の公開
+
+```bash
+export PATH="$HOME/tools/node:$HOME/tools/gh/bin:$PATH"
+git add -A && git commit -m "..." && git push   # ソース
+npm run deploy                                  # build + test → gh-pages に公開（1〜2分で反映）
+```
+
+iPhone 側は、アプリを開き直すと新しい版が読み込まれる（Service Worker が更新を検知。反映されない場合は一度終了して再起動）。
