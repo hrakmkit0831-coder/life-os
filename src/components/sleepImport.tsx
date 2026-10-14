@@ -53,7 +53,7 @@ export function SleepImport({ onImported }: { onImported: (date: string) => void
       {!parsed && (
         <>
           <div className="small muted" style={{ marginBottom: 10 }}>
-            ショートカット「LIFE OS 睡眠」を実行してから、ここをタップ。
+            睡眠のショートカットを実行してから、ここをタップ。
           </div>
           <button className="btn block" onClick={fromClipboard}>
             ヘルスケアから取り込む
@@ -106,31 +106,34 @@ function ShortcutGuide({ onClose }: { onClose: () => void }) {
         </p>
         <ol style={{ margin: 0, paddingLeft: 20 }} className="stack">
           <li>
-            ショートカットアプリ →「＋」→ 名前を <strong>LIFE OS 睡眠</strong> にする
+            ショートカットアプリ →「＋」で新規作成（名前は自由）
           </li>
           <li>
-            <strong>「ヘルスケアサンプルを検索」</strong>を追加
+            <strong>「ヘルスケアサンプルを検索」</strong>を追加（「記録」ではない方）
             <ul style={{ paddingLeft: 16, margin: '4px 0 0' }}>
-              <li>種類：睡眠分析</li>
-              <li>フィルタ追加：開始日 が 過去 1 日</li>
-              <li>フィルタ追加：値 が「ベッドにいる」ではない</li>
-              <li>フィルタ追加：値 が「覚醒」ではない</li>
-              <li>並べ替え：開始日 ／ 古い順</li>
+              <li>種類 が次と等しい：睡眠</li>
+              <li>開始日 が次の過去の期間内：1 日</li>
+              <li>値 が次と等しくない：ベッドにいる</li>
+              <li>値 が次と等しくない：覚醒</li>
+              <li>並び順序：開始日 ／ 順序：古い順 ／ 制限：オフ</li>
             </ul>
           </li>
           <li>
-            <strong>「リストから項目を取得」</strong>：最初の項目 →<strong>「ヘルスケアサンプルの詳細を取得」</strong>：開始日 →<strong>「日付をフォーマット」</strong>：カスタム <code>yyyy-MM-dd HH:mm</code>
+            <strong>「リストから項目を取得」</strong>（検索欄に「項目」）→ 入力を検索結果の<strong>開始日</strong>、<strong>最初の項目</strong>にする
           </li>
           <li>
-            もう一度、<strong>「ヘルスケアサンプルを検索」</strong>の結果から<strong>「リストから項目を取得」</strong>：最後の項目 → 詳細を取得：終了日 → 日付をフォーマット（同じ形式）
+            3 を長押しして複製 → 入力を<strong>終了日</strong>、<strong>最後の項目</strong>に変える
           </li>
           <li>
-            <strong>「テキスト」</strong>に 2つのフォーマット済み日付を改行で並べる →<strong>「クリップボードにコピー」</strong>
+            <strong>「テキスト」</strong>→ 欄をタップ →「変数を選択」で 3 のアクションをタップ → 改行 → 同じく 4 をタップ（青いボタンが2行並べば OK）
           </li>
-          <li>実行して、LIFE OS の「ヘルスケアから取り込む」をタップ</li>
+          <li>
+            <strong>「クリップボードにコピー」</strong>を追加
+          </li>
+          <li>起きてから実行し、LIFE OS の「ヘルスケアから取り込む」をタップ</li>
         </ol>
         <p className="muted">
-          初回はヘルスケアへのアクセス許可と、LIFE OS の「ペーストを許可」が求められます。オートメーション（起床時に実行など）にすると、朝はアプリでタップするだけになります。
+          初回はヘルスケアへのアクセス許可と、LIFE OS の「ペーストを許可」が求められます。「オートメーション → 睡眠 → 起床」で「すぐに実行」にすると、朝はアプリでタップするだけになります。寝る前に実行すると「過去1日」に昨夜の睡眠が入らず、空になることがあります。
         </p>
         <p className="dim tiny">
           就寝＝最初の睡眠の開始、起床＝最後の睡眠の終了。夜中に起きていた時間も睡眠時間に含みます。iOS のバージョンにより項目名が少し異なる場合があります。
